@@ -1,0 +1,548 @@
+﻿@model ApplicationViewModel;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <title>Apply</title>
+   <style>
+       span {
+           color:red;
+       }
+   </style>
+</head>
+<body>
+    <h1 class="text-center mb-5 mt-3" style="color:blueviolet">Application Form</h1>
+    <br />
+    <span asp-validation-summary="ModelOnly"></span>
+    <form asp-action="Apply" asp-controller="Services" method="post" onsubmit="return validate()">
+    <div class="container" id="1">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-primary">Basic Details</h2>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <label for="Name" class="text-primary">Name</label><br />
+                <input asp-for="Name" class="form-control" placeholder="FirstName LastName" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="col-md">
+                <label for="Email" class="text-primary">Email</label><br />
+                    <input asp-for="Email" class="form-control class=" text-primary"" placeholder="Enter E-mail Address" />
+                    <span asp-validation-for="Email"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="flexRadioDefault1" value="male" asp-for="Gender">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="flexRadioDefault2" value="female" asp-for="Gender" />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Female
+                    </label>
+                </div>
+                    <span asp-validation-for="Gender"></span>
+            </div>
+            <div class="col-md">
+                <label for="PhoneNo" class="text-primary">Contact Number</label><br />
+                <input asp-for="PhoneNo" class="form-control" placeholder="Enter Contact Number" />
+                    <span asp-validation-for="PhoneNo"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md">
+                <label for="Address" class="text-primary">Address</label>
+                <textarea asp-for="Address" placeholder="Entere Full Address" class="form-control"></textarea>
+                    <span asp-validation-for="Address"></span>
+            </div>
+            <div class="col-md">
+                <label for="Status" class="text-primary">Marrital Status</label><br />
+                <select asp-for="RelationshipStatus" class="form-control">
+                    <option disabled selected>-Select Status-</option>
+                    <option value="married">Married</option>
+                    <option value="unmarried">Unmarried</option>
+                </select>
+                    <span asp-validation-for="RelationshipStatus"></span>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col text-end">
+                <input type="button" value="Next" onclick="next('1')" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    <div class="container" id="2" style="display:none">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-primary">Education Details</h2>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h3 style="color:goldenrod">SSC</h3>
+            </div>
+        </div>
+        <div class="row">
+            <input asp-for="EducationDetails[0].EduLevel" name="name" value="1" hidden/>
+            <div class="col">
+                <label for="sscBoard" class="text-primary">Board Name</label>
+                <input asp-for="EducationDetails[0].BoardName" class="form-control" placeholder="Enter Board Name" />
+                    <span asp-validation-for="EducationDetails[0].BoardName"></span>
+            </div>
+            <div class="col">
+                <label for="sscPercentage" class="text-primary">Percentage</label>
+                <input asp-for="EducationDetails[0].Percentage" class="form-control" placeholder="00.00" />
+                    <span asp-validation-for="EducationDetails[0].Percentage"></span>
+            </div>
+            <div class="col">
+                <label for="sscYear" class="text-primary">Passing Year</label>
+                <input asp-for="EducationDetails[0].PassingYear" class="form-control" placeholder="YYYY" />
+                    <span asp-validation-for="EducationDetails[0].PassingYear"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h3 style="color:goldenrod">HSC</h3>
+            </div>
+        </div>
+        <div class="row">
+            <input asp-for="EducationDetails[1].EduLevel" name="name" value="2" hidden />
+            <div class="col">
+                <label for="sscBoard" class="text-primary">Board Name</label>
+                <input asp-for="EducationDetails[1].BoardName" class="form-control" placeholder="Enter Board Name" />
+                    <span asp-validation-for="EducationDetails[1].BoardName"></span>
+            </div>
+            <div class="col">
+                <label for="sscPercentage" class="text-primary">Percentage</label>
+                <input asp-for="EducationDetails[1].Percentage" class="form-control" placeholder="00.00" />
+                    <span asp-validation-for="EducationDetails[1].Percentage"></span>
+            </div>
+            <div class="col">
+                <label for="sscYear" class="text-primary">Passing Year</label>
+                <input asp-for="EducationDetails[1].PassingYear" class="form-control" placeholder="YYYY" />
+                    <span asp-validation-for="EducationDetails[1].PassingYear"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h3 style="color:goldenrod">Bachelor</h3>
+            </div>
+        </div>
+        <div class="row">
+            <input asp-for="EducationDetails[2].EduLevel" name="name" value="3" hidden />
+            <div class="col">
+                <label for="sscBoard" class="text-primary">Board Name</label>
+                <input asp-for="EducationDetails[2].BoardName" class="form-control" placeholder="Enter Board Name" />
+                    <span asp-validation-for="EducationDetails[2].BoardName"></span>
+            </div>
+            <div class="col">
+                <label for="sscPercentage" class="text-primary">Percentage</label>
+                <input asp-for="EducationDetails[2].Percentage" class="form-control" placeholder="00.00" />
+                    <span asp-validation-for="EducationDetails[2].Percentage"></span>
+            </div>
+            <div class="col">
+                <label for="sscYear" class="text-primary">Passing Year</label>
+                <input asp-for="EducationDetails[2].PassingYear" class="form-control" placeholder="YYYY" />
+                    <span asp-validation-for="EducationDetails[2].PassingYear"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <h3 style="color:goldenrod">Master</h3>
+            </div>
+        </div>
+        <div class="row">
+            <input asp-for="EducationDetails[3].EduLevel" name="name" value="4" hidden />
+            <div class="col">
+                <label for="sscBoard" class="text-primary">Board Name</label>
+                <input asp-for="EducationDetails[3].BoardName" class="form-control" placeholder="Enter Board Name" />
+                    <span asp-validation-for="EducationDetails[3].BoardName"></span>
+            </div>
+            <div class="col">
+                <label for="sscPercentage" class="text-primary">Percentage</label>
+                <input asp-for="EducationDetails[3].Percentage" class="form-control" placeholder="00.00" />
+                    <span asp-validation-for="EducationDetails[3].BoardName"></span>
+            </div>
+            <div class="col">
+                <label for="sscYear" class="text-primary">Passing Year</label>
+                <input asp-for="EducationDetails[3].PassingYear" class="form-control" placeholder="YYYY" />
+                    <span asp-validation-for="EducationDetails[3].PassingYear"></span>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col text-start">
+                <input type="button" class="btn btn-primary" value="Previous" onclick="prev('2')" />
+            </div>
+            <div class="col text-end">
+                <input type="button" class="btn btn-primary" value="Next" onclick="next('2')">
+            </div>
+        </div>
+    </div>
+    <div class="container" id="3" style="display:none">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-primary">Work Experience</h2>
+            </div>
+        </div>
+        <br />
+        <div id="expContent">
+            <div class="row">
+                <div class="col">
+                    <label for="compName" class="text-primary">Company Name</label><br />
+                    <input asp-for="Company" class="form-control" placeholder="Enter Full Name" />
+                    <span asp-validation-for="Company"></span>
+                </div>
+                <div class="col">
+                    <label for="compDesignation" class="text-primary">Designation</label><br />
+                    <input asp-for="Designation" class="form-control" placeholder="Enter Designation" />
+                    <span asp-validation-for="Designation"></span>
+                </div>
+                <div class="col">
+                    <label for="compFrom" class="text-primary">From</label><br />
+                    <input asp-for="From" class="form-control" />
+                    <span asp-validation-for="From"></span>
+                </div>
+                <div class="col">
+                    <label for="compTo" class="text-primary">To</label><br />
+                    <input asp-for="To" class="form-control" />
+                    <span asp-validation-for="To"></span>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col text-center">
+                    <input type="button" class="btn btn-outline-primary" value="Add Experience" onclick="add()" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col text-start">
+                <input type="button" value="Previous" class="btn btn-primary" onclick="prev('3')" />
+            </div>
+            <div class="col text-end">
+                <input type="button" value="Next" class="btn btn-primary" onclick="next('3')" />
+            </div>
+        </div>
+    </div>
+    <div class="container" id="4" style="display:none">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-primary">Knowledge</h2>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col text-center">
+                            <input class="form-check-input" type="checkbox" value="" id="hindi" asp-for="LangName[0]" onchange="change('hindi')">
+                        <label class="form-check-label" for="hindi">
+                            Hindi
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="checkbox" value="" id="hindiRead" asp-for="LangLevel[0][0]" disabled>
+                        <label class="form-check-label" for="hindiRead">
+                            Read
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="hindiWrite" asp-for="LangLevel[0][1]" disabled>
+                        <label class="form-check-label" for="hindiWrite">
+                            Write
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="hindiSpeak" asp-for="LangLevel[0][2]" disabled>
+                        <label class="form-check-label" for="hindiSpeak">
+                            Speak
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="english" asp-for="LangName[1]" onchange="change('english')" />
+                        <label class="form-check-label" for="english">
+                            English
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="englishRead" asp-for="LangLevel[1][0]" disabled>
+                        <label class="form-check-label" for="englishRead">
+                            Read
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="englishWrite" asp-for="LangLevel[1][1]" disabled>
+                        <label class="form-check-label" for="englishWrite">
+                            Write
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="englishSpeak" asp-for="LangLevel[1][2]" disabled>
+                        <label class="form-check-label" for="englishSpeak">
+                            Speak
+                        </label>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="gujarati" asp-for="LangName[2]" onchange="change('gujarati')" />
+                        <label class="form-check-label" for="gujarati">
+                            Gujarati
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="gujaratiRead" asp-for="LangLevel[2][0]" disabled>
+                        <label class="form-check-label" for="gujaratiRead">
+                            Read
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="gujaratiWrite" asp-for="LangLevel[2][1]" disabled>
+                        <label class="form-check-label" for="gujaratiWrite">
+                            Write
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="checkbox" value="" id="gujaratiSpeak" asp-for="LangLevel[2][2]" disabled>
+                        <label class="form-check-label" for="gujaratiSpeak">
+                            Speak
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col text-center">
+                            <input class="form-check-input" type="checkbox" asp-for="TechName[0]" value="" id="php" onchange="techChange('php')">
+                        <label class="form-check-label" for="php">
+                            PHP
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                        <input class="form-check-input" type="radio" asp-for="TechLevel[0]" id="phpBegginer" value="begginer" disabled>
+                        <label class="form-check-label" for="phpBegginer">
+                            Begginer
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[0]" id="phpMediator" value="mediator" disabled>
+                        <label class="form-check-label" for="phpMediator">
+                            Mediator
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[0]" id="phpExpert" value="expert" disabled>
+                        <label class="form-check-label" for="phpExpert">
+                            Expert
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span asp-validation-for="TechLevel"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col text-center">
+                            <input class="form-check-input" type="checkbox" asp-for="TechName[1]" value="" id="mysql" onchange="techChange('mysql')">
+                        <label class="form-check-label" for="mysql">
+                                Mysql
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[1]" id="mysqlBegginer" value="begginer" disabled>
+                        <label class="form-check-label" for="mysqlBegginer">
+                            Begginer
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[1]" id="mysqlMediator" value="mediator" disabled>
+                        <label class="form-check-label" for="mysqlMediator">
+                            Mediator
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[1]" id="mysqlExpert" value="expert" disabled>
+                        <label class="form-check-label" for="mysqlExpert">
+                            Expert
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span asp-validation-for="TechLevel"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col text-center">
+                            <input class="form-check-input" type="checkbox" asp-for="TechName[2]" value="" id="oracle" onchange="techChange('oracle')">
+                        <label class="form-check-label" for="oracle">
+                            Oracle
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[2]" id="oracleBegginer" value="begginer" disabled>
+                        <label class="form-check-label" for="oracleBegginer">
+                            Begginer
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[2]" id="oracleMediator" value="mediator" disabled>
+                        <label class="form-check-label" for="oracleMediator">
+                            Mediator
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[2]" id="oracleExpert" value="expert" disabled>
+                        <label class="form-check-label" for="oracleExpert">
+                            Expert
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span asp-validation-for="TechLevel"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col text-center">
+                            <input class="form-check-input" type="checkbox" asp-for="TechName[3]" value="" id="laravel" onchange="techChange('laravel')">
+                        <label class="form-check-label" for="laravel">
+                            Laravel
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[3]" id="laravelBegginer" value="begginer" disabled>
+                        <label class="form-check-label" for="laravelBegginer">
+                            Begginer
+                        </label>
+                    </div>
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[3]" id="laravelMediator" value="mediator" disabled>
+                        <label class="form-check-label" for="laravelMediator">
+                            Mediator
+                        </label>
+                    </div> 
+                    <div class="col text-center">
+                            <input class="form-check-input" type="radio" asp-for="TechLevel[3]" id="laravelExpert" value="expert" disabled>
+                        <label class="form-check-label" for="laravelExpert">
+                            Expert
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span asp-validation-for="TechLevel"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col text-start">
+                <input type="button" value="Previous" class="btn btn-primary" onclick="prev('4')" />
+            </div>
+            <div class="col text-end">
+                <input type="button" value="Next" class="btn btn-primary" onclick="next('4')" />
+            </div>
+        </div>
+    </div>
+    <div class="container" id="5" style="display:none">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-primary">Preference</h2>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col">
+                <label for="expectedCtc" class="text-primary">Expected Ctc</label>
+                <input asp-for="ExpectedCtc" class="form-control" placeholder="400000" />
+                <span asp-validation-for="ExpectedCtc"></span>
+            </div>
+            <div class="col">
+                <label for="currentCtc" class="text-primary">Current Ctc</label>
+                <input asp-for="CurrentCtc" class="form-control" placeholder="360000-500000" />
+                <span asp-validation-for="CurrentCtc"></span>
+            </div>
+        </div>
+            <br />
+        <div class="row">
+            <div class="col">
+                <label for="location" class="text-primary">Prefered Location</label>
+                <select class="form-control" asp-for="Location" multiple>
+                    <option value="Sattadhar">Sattadhar</option>
+                    <option value="Sola">Sola</option>
+                    <option value="Shukan Mall">Shukan Mall</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="notice" class="text-primary">Notice Period</label>
+                <input asp-for="Notice" class="form-control" placeholder="In Months" />
+                <span asp-validation-for="Notice"></span>
+            </div>
+            <div class="col">
+                <label for="departmenrt" class="text-primary">Department</label>
+                <input asp-for="Department" class="form-control" placeholder="" />
+                <span asp-validation-for="Department"></span>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col text-start">
+                <input type="button" value="Previous" class="btn btn-primary" onclick="prev('5')" />
+            </div>
+            <div class="col text-end">
+                <input type="submit" value="Next" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    </form>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
